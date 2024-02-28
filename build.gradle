@@ -1,0 +1,58 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+}
+
+plugins {
+    id 'java'
+}
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+version = "0.0.1"
+
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    jcenter()
+
+    maven {
+        url "https://packages.confluent.io/maven"
+        maven { url 'https://jitpack.io' }
+
+    }
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    implementation "io.confluent.ksql:ksqldb-udf:7.3.0"
+    implementation group: 'org.yaml', name: 'snakeyaml', version: '2.0'
+    implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.15.2'
+    implementation group: 'org.apache.kafka', name: 'kafka-clients', version: '3.6.0'
+    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+    implementation group: 'org.json', name: 'json', version: '20231013'
+
+
+
+}
+apply plugin: "java"
+compileJava {
+    options.compilerArgs << "-parameters"
+}
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes 'UDFTRANSFORMXML_SC': 'UDFTRANSFORMXMLTER_SC'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+test {
+    useJUnitPlatform()
+}
