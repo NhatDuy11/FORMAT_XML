@@ -1,0 +1,29 @@
+- table:
+    name: ATM_LOG
+    database: ISTUAT
+    schema: SACOM_SW_OWN
+    columns:
+    - name: SHCLOG_ID
+      primary_key: '1'
+      data_type: CHAR(20)
+    - name: INSTITUTION_ID
+      primary_key: '0'
+      data_type: VARCHAR2(10)
+    - name: GROUP_NAME
+      primary_key: '0'
+      data_type: VARCHAR2(10)
+    - name: UNIT
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: FUNCTION_CODE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: LOGGED_TIME
+      primary_key: '0'
+      data_type: DATE
+    - name: LOG_DATA
+      primary_key: '0'
+      data_type: VARCHAR2(4000)
+    - name: SITE_ID
+      primary_key: '1'
+      data_type: NUMBER(22)

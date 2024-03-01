@@ -74,10 +74,14 @@ public class FORMATXML_UDF {
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document = builder.parse(new InputSource(new StringReader(xmlinput_str)));
             NodeList colElements = document.getElementsByTagName("col");
-
-
             InputStream in = new FileInputStream("/opt/confluent-7.0.1/extractjson/table_ATMLOG.yaml");
-            //InputStream in = new FileInputStream("E:\\XML_FORMATSC\\src\\main\\java\\test.yaml");
+            //InputStream in = new FileInputStream("E:\\XML_FORMATSC\\src\\main\\java\\
+            NodeList opearations = document.getElementsByTagName("operation");
+            Node OperTag = opearations.item(0);
+            String rowop = IntenseQ();
+            Element operation_tag = (Element) OperTag;
+            operation_tag.setAttribute("IntenSeq", rowop);
+            ReplaceT(OperTag);
 
             Yaml yaml = new Yaml();
             Map<String, Object> data = yaml.load(in);
@@ -114,12 +118,7 @@ public class FORMATXML_UDF {
                                 Colement.appendChild(document.createTextNode("\n"));
 
                             }
-                            NodeList opearations = document.getElementsByTagName("operation");
-                            Node OperTag = opearations.item(0);
-                            String rowop = IntenseQ();
-                            Element operation_tag = (Element) OperTag;
-                            operation_tag.setAttribute("IntenSeq", rowop);
-                            ReplaceT(OperTag);
+
 
                       //          NodeList before_after = document.getElementsByTagName("before");
 //                            Node Before = before_after.item(0);
