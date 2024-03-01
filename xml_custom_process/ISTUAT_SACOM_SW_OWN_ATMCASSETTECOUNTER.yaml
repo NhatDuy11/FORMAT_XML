@@ -1,0 +1,47 @@
+- table:
+    name: ATMCASSETTECOUNTER
+    database: ISTUAT
+    schema: SACOM_SW_OWN
+    columns:
+    - name: CASH_CUR_BAL
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: CASH_START_BAL
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: CASH_PREV_BAL
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: RESET_TIME
+      primary_key: '0'
+      data_type: DATE
+    - name: RECYCLE_COUNT
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: PREV_RECYCLE_COUNT
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: INSTITUTIONID
+      primary_key: '1'
+      data_type: VARCHAR2(10)
+    - name: GROUP_NAME
+      primary_key: '1'
+      data_type: VARCHAR2(10)
+    - name: UNIT
+      primary_key: '1'
+      data_type: NUMBER(22)
+    - name: CASSETTE_NBR
+      primary_key: '1'
+      data_type: NUMBER(22)
+    - name: ITEMS_REJECTED
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: CASH_INC
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: CASH_DEC
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: CASH_OUT
+      primary_key: '0'
+      data_type: NUMBER(22)

@@ -1,0 +1,35 @@
+- table:
+    name: ATMSTATUS
+    database: ISTUAT
+    schema: SACOM_SW_OWN
+    columns:
+    - name: O_ROWID
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: INSTITUTIONID
+      primary_key: '0'
+      data_type: VARCHAR2(10)
+    - name: SITE_ID
+      primary_key: '1'
+      data_type: NUMBER(22)
+    - name: LOG_ID
+      primary_key: '1'
+      data_type: VARCHAR2(20)
+    - name: UNIT
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: GROUP_NAME
+      primary_key: '0'
+      data_type: VARCHAR2(10)
+    - name: STATUS_DATE
+      primary_key: '0'
+      data_type: DATE
+    - name: STATUS_TIME
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: STATUS
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: SDESC
+      primary_key: '0'
+      data_type: CHAR(40)

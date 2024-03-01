@@ -1,0 +1,35 @@
+- table:
+    name: ATMTOTALS
+    database: ISTUAT
+    schema: SACOM_SW_OWN
+    columns:
+    - name: INSTITUTIONID
+      primary_key: '1'
+      data_type: VARCHAR2(10)
+    - name: GROUP_NAME
+      primary_key: '1'
+      data_type: VARCHAR2(10)
+    - name: UNIT
+      primary_key: '1'
+      data_type: NUMBER(22)
+    - name: TYPE
+      primary_key: '1'
+      data_type: VARCHAR2(6)
+    - name: CURRENCY
+      primary_key: '1'
+      data_type: NUMBER(22)
+    - name: COUNT
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: AMOUNT
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: RESET_TIME
+      primary_key: '0'
+      data_type: DATE
+    - name: PREV_COUNT
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: PREV_AMOUNT
+      primary_key: '0'
+      data_type: NUMBER(22)

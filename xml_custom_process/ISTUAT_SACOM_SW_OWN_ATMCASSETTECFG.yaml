@@ -1,0 +1,29 @@
+- table:
+    name: ATMCASSETTECFG
+    database: ISTUAT
+    schema: SACOM_SW_OWN
+    columns:
+    - name: INSTITUTIONID
+      primary_key: '1'
+      data_type: VARCHAR2(10)
+    - name: CASSETTE_CFG_ID
+      primary_key: '1'
+      data_type: NUMBER(22)
+    - name: CASSETTE_NBR
+      primary_key: '1'
+      data_type: NUMBER(22)
+    - name: ITEM_TYPE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: DENOMINATION
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: CURRENCY
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: DENOMINATIONID
+      primary_key: '0'
+      data_type: CHAR(1)
+    - name: MAXDISPENSE
+      primary_key: '0'
+      data_type: NUMBER(22)

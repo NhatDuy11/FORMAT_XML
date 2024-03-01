@@ -1,0 +1,128 @@
+- table:
+    name: ATM
+    database: ISTUAT
+    schema: SACOM_SW_OWN
+    columns:
+    - name: UNIT
+      primary_key: '1'
+      data_type: NUMBER(22)
+    - name: INSTITUTIONID
+      primary_key: '1'
+      data_type: VARCHAR2(10)
+    - name: GROUP_NAME
+      primary_key: '1'
+      data_type: VARCHAR2(10)
+    - name: GOSERVICE
+      primary_key: '0'
+      data_type: CHAR(1)
+    - name: MODEL
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: MAKE
+      primary_key: '0'
+      data_type: CHAR(3)
+    - name: LOCAL_PIN
+      primary_key: '0'
+      data_type: CHAR(1)
+    - name: ADD_TOTAL
+      primary_key: '0'
+      data_type: CHAR(1)
+    - name: TXN_ALLOW
+      primary_key: '0'
+      data_type: CHAR(10)
+    - name: CURRENCY
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: LOCATION
+      primary_key: '0'
+      data_type: CHAR(25)
+    - name: LOGGING
+      primary_key: '0'
+      data_type: CHAR(1)
+    - name: GEO_LOC
+      primary_key: '0'
+      data_type: CHAR(18)
+    - name: ACCEPTORNAME
+      primary_key: '0'
+      data_type: CHAR(40)
+    - name: TERMID
+      primary_key: '0'
+      data_type: CHAR(8)
+    - name: O_ROWID
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: H_LOCATION
+      primary_key: '0'
+      data_type: CHAR(25)
+    - name: WD_NO_RPT
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: TIME_OFFSET
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: MAC_REQUIRED
+      primary_key: '0'
+      data_type: CHAR(1)
+    - name: MAC_NCR_TXNREQ
+      primary_key: '0'
+      data_type: CHAR(47)
+    - name: MAC_NCR_TXNREPLY
+      primary_key: '0'
+      data_type: CHAR(36)
+    - name: MAC_NCR_SOLITSTAT
+      primary_key: '0'
+      data_type: CHAR(11)
+    - name: MAC_NCR_OTHER
+      primary_key: '0'
+      data_type: CHAR(4)
+    - name: MAC_NCR_TRACK1
+      primary_key: '0'
+      data_type: CHAR(6)
+    - name: MAC_NCR_TRACK2
+      primary_key: '0'
+      data_type: CHAR(6)
+    - name: MAC_NCR_TRACK3
+      primary_key: '0'
+      data_type: CHAR(11)
+    - name: FUNC_FLAGS
+      primary_key: '0'
+      data_type: CHAR(20)
+    - name: MAXDISPENSE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: TERM_COMP
+      primary_key: '0'
+      data_type: CHAR(8)
+    - name: HDL_ACK
+      primary_key: '0'
+      data_type: CHAR(1)
+    - name: MAC_NCR_EMV
+      primary_key: '0'
+      data_type: CHAR(5)
+    - name: PRIORITY_ROUTING
+      primary_key: '0'
+      data_type: CHAR(32)
+    - name: INTERNAL_UNIT
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: FIT_LIST_ID
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: CASSETTE_CFG_ID
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: DISPENSE_TABLE_ID
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: MANUFACTURER
+      primary_key: '0'
+      data_type: VARCHAR2(25)
+    - name: EMULATION
+      primary_key: '0'
+      data_type: VARCHAR2(25)
+    - name: MAX_COIN_DISPENSE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: RKM_INST
+      primary_key: '0'
+      data_type: VARCHAR2(15)
