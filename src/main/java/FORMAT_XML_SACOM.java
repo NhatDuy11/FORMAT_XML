@@ -6,30 +6,32 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 import org.yaml.snakeyaml.Yaml;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
+import java.math.BigInteger;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 @UdfDescription(name = "xml_custom",description = "add tag for xml")
-public class FORMAT_XML_SACOM {
-    public static String IntenseQ() {
-        Random random = new Random();
-        long mostSigBits = random.nextLong();
-        long leastSigBits = random.nextLong();
-        UUID uuid = new UUID(mostSigBits, leastSigBits);
-        return uuid.toString().replace("-", "");
+public class FORMAT_XML_SACOM{
+    public static String yamlDir = "/opt/confluent/xml_table_yaml_format/";
+    public static String logDir = "/apps/log/confluent/ksql/";
+    //  public static String yamlDir = "E:\\opt\\confluent\\xml_table_yaml_format\\xml_custom_process\\";
+    //  public static String logDir = "E:\\apps\\log\\ksql\\";
+    public static String IntentseQ() {
+        String lUUID = String.format("%040d", new BigInteger(UUID.randomUUID().toString().replace("-", ""), 16));
+        return lUUID;
     }
+
+
+  //  public static String yamlDir = "E:\\opt\\confluent\\xml_table_yaml_format\\xml_custom_process\\";
+  //  public static String logDir = "E:\\apps\\log\\ksql\\";
     public static void ReplaceT(Node OperTag_name) {
         for (int k = 0; k < OperTag_name.getAttributes().getLength(); k++) {
             String name = OperTag_name.getAttributes().item(k).getNodeName();
@@ -37,45 +39,53 @@ public class FORMAT_XML_SACOM {
             if ("current_ts".equals(name)) {
                 value_a = value_a.replace("T", " ");
                 ((Element) OperTag_name).setAttribute(name, value_a);
-            } else {
-                value_a = OperTag_name.getAttributes().item(k).getNodeValue();
             }
         }
     }
-    public static String getPath(String fileNames) {
-        String fullPath = System.getProperty("user.dir") + "/xml_custom_process/" + fileNames + ".yaml";
-        System.out.println("file_path: " + fullPath);
-
-        return fullPath;
-    }
-    //@Udf(description = "add tag for xml")
-    public   String cloneFM(
+    @Udf(description = "add tag for xml format")
+    public   String format_xml(
             @UdfParameter(value = "inputXML") String inputXML,
             @UdfParameter(value = "table_name") String tableName,
             @UdfParameter(value = "file_yaml") String fileName
-    ) throws IOException, ParserConfigurationException, SAXException, TransformerException {
+    ) throws Exception {
         try {
-            String inputXMl = inputXML.trim().replaceFirst(".*?<", "<");
-            System.out.println("inputXML : " + inputXMl);
+           // String inputXMl = inputXML.trim().replaceFirst(".*?<", "<");
+            String inputXMl =inputXML.replaceAll("[\u0000-\u001F]", "");
+          //  System.out.println("inputXML : " + inputXMl);
             DocumentBuilderFactory db_factory = DocumentBuilderFactory.newInstance();
             db_factory.setCoalescing(true);
             DocumentBuilder builder = db_factory.newDocumentBuilder();
             Document document = builder.parse(new InputSource(new StringReader(inputXMl)));
             NodeList node_col = document.getElementsByTagName("col");
             NodeList opearations = document.getElementsByTagName("operation");
-            Node OperTag = opearations.item(0);
-            String rowop = IntenseQ();
-            Element operation_tag = (Element) OperTag;
-            operation_tag.setAttribute("IntenSeq", rowop);
-            ReplaceT(OperTag);
+            Node rowNode = opearations.item(0);
+            Element rowOpElement = document.createElement("rowOp");
+            String rowOpAttr = IntentseQ();
+            rowOpElement.setAttribute("intentSEQ",rowOpAttr);
+            rowNode.getParentNode().replaceChild(rowOpElement,rowNode);
+            rowOpElement.appendChild(rowNode);
+            Element msgElement = document.createElement("msg");
+            msgElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+            msgElement.setAttribute("xsi:noNamespaceSchemaLocation", "mqcap.xsd");
+            rowOpElement.getParentNode().replaceChild(msgElement,rowOpElement);
+            msgElement.appendChild(rowOpElement);
+            ReplaceT(rowNode);
+            document.renameNode(rowNode,null,"Row");
             Yaml yaml = new Yaml();
-            System.out.println(getPath("test1"));
-            InputStream in = new FileInputStream(getPath(fileName));
+           // System.out.println(getPath("test1"));
+            String fullpathYaml = yamlDir+fileName+".yaml";
+            InputStream in = new FileInputStream(fullpathYaml);
             List<Map<String, Object>> data = yaml.load(in);
             for (int i = 0; i < node_col.getLength(); i++) {
                 Element Col_element = (Element) node_col.item(i);
+                NodeList childNodes = Col_element.getElementsByTagName("before");
+                System.out.println( "before : "  + Col_element.getElementsByTagName("before").item(0));
+                if (childNodes.item(0) != null){
+                    Col_element.removeChild(childNodes.item(0));
+                }
+                Col_element.removeAttribute("index");
                 String Col_name = Col_element.getAttribute("name");
-                System.out.println("Col_name" + Col_name);
+              //  System.out.println("Col_name" + Col_name);
                 for (Map<String, Object> tableEntry : data) {
                     Map<String, Object> tableInfo = (Map<String, Object>) tableEntry.get("table");
                     String table_name = (String) tableInfo.get("name");
@@ -101,22 +111,43 @@ public class FORMAT_XML_SACOM {
             }
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
+            //transformer.setOutputProperty(OutputKeys.INDENT,"yes");
             StringWriter writer = new StringWriter();
             transformer.transform(new DOMSource(document), new StreamResult(writer));
             String formatXML = writer.getBuffer().toString();
-            System.out.println("output :  " + formatXML);
+         //   System.out.println("output :  " + formatXML);
             return formatXML;
         } catch (Exception e) {
-            e.printStackTrace();
+            writeErrorToFile(e,inputXML,tableName);
             throw e;
+        }
+
+    }
+    public static void writeErrorToFile(Exception a,String xmlInput, String tableName) throws Exception {
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+        String fileName= logDir + format.format(Calendar.getInstance().getTime()) + "_"  + tableName +  ".txt";
+        try (PrintWriter writer = new PrintWriter(new FileWriter(fileName, true))) {
+            writer.println("Error occurred at: " + new Date());
+            writer.println("Xml input error : " + xmlInput);
+            a.printStackTrace(writer);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-//    public static void main(String[] args) throws IOException, ParserConfigurationException, TransformerException, SAXException {
-//        String xml =  "\u0000\u0000\u0000\u0000\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<operation table=\"SACOM_SW_OWN.ATM_LOG\" type=\"I\" ts=\"2023-08-23 11:15:05.898835\" current_ts=\"2023-08-23T11:17:35.723001\" pos=\"00000000020001372473\" numCols=\"8\">\n  <col name=\"SHCLOG_ID\" index=\"0\">\n    <before missing=\"true\"/>\n    <after><![CDATA[AAEAsgAkZN52XQAB ]]></after>\n  </col>\n  <col name=\"INSTITUTION_ID\" index=\"1\">\n    <before missing=\"true\"/>\n    <after><![CDATA[1]]></after>\n  </col>\n  <col name=\"GROUP_NAME\" index=\"2\">\n    <before missing=\"true\"/>\n    <after><![CDATA[SGE5050101]]></after>\n  </col>\n  <col name=\"UNIT\" index=\"3\">\n    <before missing=\"true\"/>\n    <after><![CDATA[97]]></after>\n  </col>\n  <col name=\"FUNCTION_CODE\" index=\"4\">\n    <before missing=\"true\"/>\n    <after><![CDATA[200]]></after>\n  </col>\n  <col name=\"LOGGED_TIME\" index=\"5\">\n    <before missing=\"true\"/>\n    <after><![CDATA[2023-08-18 02:34:53.000000000]]></after>\n  </col>\n  <col name=\"LOG_DATA\" index=\"6\">\n    <before missing=\"true\"/>\n    <after><![CDATA[12097002033P20]]></after>\n  </col>\n  <col name=\"SITE_ID\" index=\"7\">\n    <before missing=\"true\"/>\n    <after><![CDATA[1]]></after>\n  </col>\n</operation>\n";
-//        String tableName = "ATM_LOG";
-//        String fileName = "ISTUAT_SACOM_SW_OWN_ATM_LOG";
-//        cloneFM(xml,tableName,fileName);
+//    public static void main(String[] args) throws Exception {
+//        String xml = "<?xml version='1.0' encoding='UTF-8'?> <operation table='SACOM_SW_OWN.ATMCASSETTECFG' type='U' ts='2024-03-02 17:34:36.000000' current_ts='2024-03-02T17:34:41.472000' pos='00000000140000025111' numCols='8'> \n" +
+//                "<col name='INSTITUTIONID' index='0'> <before><![CDATA[1]]></before> <after><![CDATA[1]]></after> </col> \n" +
+//                "<col name='CASSETTE_CFG_ID' index='1'> <before><![CDATA[2]]></before> <after><![CDATA[2]]></after> </col> \n" +
+//                "<col name='CASSETTE_NBR' index='2'> <before><![CDATA[1]]></before> <after><![CDATA[1]]></after> </col> \n" +
+//                "<col name='ITEM_TYPE' index='3'> <missing/> </col> \n" +
+//                "<col name='DENOMINATION' index='4'> <before><![CDATA[500000]]></before> <after><![CDATA[1]]></after> </col> \n" +
+//                "<col name='CURRENCY' index='5'> <missing/> </col> \n" +
+//                "<col name='DENOMINATIONID' index='6'> <missing/> </col> \n" +
+//                "<col name='MAXDISPENSE' index='7'> <missing/> </col> </operation>";
+//        String tableName = "ATMCASSETTECFG";
+//        String fileName = "ISTUAT_SACOM_SW_OWN_ATMCASSETTECFG";
+//        format_xml(xml,tableName,fileName);
 //
 //    }
 }
