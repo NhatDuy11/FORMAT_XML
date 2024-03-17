@@ -1,0 +1,413 @@
+- table:
+    name: SHCLOG
+    database: ISTUAT
+    schema: SACOM_SW_OWN
+    columns:
+    - name: ORIGTIME
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: MERCHANT_TYPE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: ACQ_COUNTRY
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: REFNUM
+      primary_key: '0'
+      data_type: CHAR(12)
+    - name: AUTHNUM
+      primary_key: '0'
+      data_type: CHAR(6)
+    - name: TERMID
+      primary_key: '0'
+      data_type: CHAR(8)
+    - name: ACCEPTORNAME
+      primary_key: '0'
+      data_type: CHAR(40)
+    - name: TERMLOC
+      primary_key: '0'
+      data_type: CHAR(25)
+    - name: ADDRESPONSE
+      primary_key: '0'
+      data_type: CHAR(25)
+    - name: ACCTNUM
+      primary_key: '0'
+      data_type: CHAR(65)
+    - name: BRANCH
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: SERIAL_1
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: SERIAL_2
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: STOREID
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: LANE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: TERMINAL_TRACE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: CHECKER_ID
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: SUPERVISOR
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: SHIFT_NUMBER
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: BATCH_ID
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: DEVICE_DEVCAP
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: SHC_DEVCAP
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: FORMATTER_DEVCAP
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: AUTH_DEVCAP
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: FILLER1
+      primary_key: '0'
+      data_type: VARCHAR2(50)
+    - name: FILLER2
+      primary_key: '0'
+      data_type: VARCHAR2(50)
+    - name: FILLER3
+      primary_key: '0'
+      data_type: VARCHAR2(50)
+    - name: FILLER4
+      primary_key: '0'
+      data_type: VARCHAR2(50)
+    - name: ISSUER_DATA
+      primary_key: '0'
+      data_type: VARCHAR2(128)
+    - name: ACQUIRER_DATA
+      primary_key: '0'
+      data_type: VARCHAR2(128)
+    - name: NEW_AMOUNT_EQUIV
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: ACQ_AVAL_BALANCE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: ACQ_LEDGER_BALANCE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: SETL_AVAL_BALANCE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: SETL_LEDGER_BALANCE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: AVAL_BALANCE_TYPE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: LEDGER_BALANCE_TYPE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: NEW_SETL_FEE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: TXN_AMOUNT
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: TXN_NEW_AMOUNT
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: TXN_CURRENCY_CODE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: TXN_CONV_RATE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: TXN_CONV_DATE
+      primary_key: '0'
+      data_type: DATE
+    - name: CH_AMOUNT
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: CH_NEW_AMOUNT
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: CH_CURRENCY_CODE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: CH_CONV_RATE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: CH_CONV_DATE
+      primary_key: '0'
+      data_type: DATE
+    - name: LEDGER_BALANCE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: SLOT_NUM
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: DEVICE_FEE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: SHC_DATA_BUFFER
+      primary_key: '0'
+      data_type: RAW(254)
+    - name: CARD_SEQNO
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: ALPHARESPONSECODE
+      primary_key: '0'
+      data_type: CHAR(3)
+    - name: CHIP_TYPE
+      primary_key: '0'
+      data_type: CHAR(1)
+    - name: CHIP_INDEX
+      primary_key: '1'
+      data_type: CHAR(20)
+    - name: PROCESSOR_BUSDAY
+      primary_key: '0'
+      data_type: DATE
+    - name: SEQ_TRACE_NO
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: SEG_REQ
+      primary_key: '0'
+      data_type: RAW(100)
+    - name: SEG_RESP
+      primary_key: '0'
+      data_type: RAW(100)
+    - name: SITE_ID
+      primary_key: '1'
+      data_type: NUMBER(22)
+    - name: VERSION
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: SRC_NODE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: DEST_NODE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: SUBMERCHANT_ID
+      primary_key: '0'
+      data_type: VARCHAR2(15)
+    - name: DEST_ID
+      primary_key: '0'
+      data_type: VARCHAR2(15)
+    - name: PAYFACID
+      primary_key: '0'
+      data_type: VARCHAR2(11)
+    - name: MSGTYPE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: FLIPPED_MSGTYPE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: PAN
+      primary_key: '0'
+      data_type: CHAR(19)
+    - name: MASK_PAN
+      primary_key: '0'
+      data_type: CHAR(19)
+    - name: PCODE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: TXNTYPE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: AMOUNT
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: AVAL_BALANCE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: AMOUNT_EQUIV
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: CASH_BACK
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: ISS_CONV_RATE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: ISS_CURRENCY_CODE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: ISS_CONV_DATE
+      primary_key: '0'
+      data_type: DATE
+    - name: ACQ_CONV_RATE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: ACQ_CURRENCY_CODE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: ACQ_CONV_DATE
+      primary_key: '0'
+      data_type: DATE
+    - name: TRA_AMOUNT
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: TRA_CONV_RATE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: TRA_CURRENCY_CODE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: GATEWAY_ID
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: TRA_CONV_DATE
+      primary_key: '0'
+      data_type: DATE
+    - name: FEE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: NEW_FEE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: NEW_AMOUNT
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: NEW_SETL_AMOUNT
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: SETTLEMENT_FEE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: SETTLEMENT_RATE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: SETTLEMENT_CODE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: SETTLEMENT_AMOUNT
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: TRANDATE
+      primary_key: '0'
+      data_type: DATE
+    - name: TRANTIME
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: TRACE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: LOCAL_TIME
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: LOCAL_DATE
+      primary_key: '0'
+      data_type: DATE
+    - name: SETTLEMENT_DATE
+      primary_key: '0'
+      data_type: DATE
+    - name: CAP_DATE
+      primary_key: '0'
+      data_type: DATE
+    - name: POS_ENTRY_CODE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: POS_CONDITION_CODE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: POS_PIN_CAP_CODE
+      primary_key: '0'
+      data_type: CHAR(1)
+    - name: POS_CAP_CODE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: LIFE_CYCLE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: ACQUIRER
+      primary_key: '0'
+      data_type: CHAR(10)
+    - name: ISSUER
+      primary_key: '0'
+      data_type: CHAR(10)
+    - name: TRANSFEREE
+      primary_key: '0'
+      data_type: CHAR(10)
+    - name: ORIGINATOR
+      primary_key: '0'
+      data_type: CHAR(10)
+    - name: MEMBER_ID
+      primary_key: '0'
+      data_type: CHAR(11)
+    - name: F_ID
+      primary_key: '0'
+      data_type: CHAR(11)
+    - name: TXNSRC
+      primary_key: '0'
+      data_type: VARCHAR2(10)
+    - name: TXNDEST
+      primary_key: '0'
+      data_type: VARCHAR2(10)
+    - name: ALTERNATEACQUIRER
+      primary_key: '0'
+      data_type: CHAR(10)
+    - name: ENTITYID
+      primary_key: '0'
+      data_type: VARCHAR2(30)
+    - name: ISS_ENTITYID
+      primary_key: '0'
+      data_type: VARCHAR2(30)
+    - name: CARDPRODUCT
+      primary_key: '0'
+      data_type: CHAR(10)
+    - name: MVV
+      primary_key: '0'
+      data_type: CHAR(10)
+    - name: INVOICE_NUMBER
+      primary_key: '0'
+      data_type: CHAR(6)
+    - name: TRANS_ID
+      primary_key: '0'
+      data_type: CHAR(15)
+    - name: FPI
+      primary_key: '0'
+      data_type: CHAR(3)
+    - name: TXN_START_TIME
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: TXN_END_TIME
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: DEVICE_CAP
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: RESPCODE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: REASON_CODE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: REVCODE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: SHCERROR
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: SAF
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: ORIGMSG
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: ORIGFLIPPEDMSG
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: ORIGTRACE
+      primary_key: '0'
+      data_type: NUMBER(22)
+    - name: ORIGDATE
+      primary_key: '0'
+      data_type: DATE
