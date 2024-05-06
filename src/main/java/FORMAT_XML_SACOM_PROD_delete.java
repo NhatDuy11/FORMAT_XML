@@ -8,6 +8,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.yaml.snakeyaml.Yaml;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -19,13 +20,15 @@ import java.io.*;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+
 @UdfDescription(name = "xml_custom",description = "add tag for xml new")
-public class FORMAT_XML_SACOM_PROD {
-      public static String yamlDir = "/opt/confluent/xml_table_yaml_format/";
-     public static String logDir = "/data/confluent/error_ext/";
+public class FORMAT_XML_SACOM_PROD_delete {
+      //public static String yamlDir = "/opt/confluent/xml_table_yaml_format/";
+    // public static String logDir = "/data/confluent/error_ext/";
     //public static String logDir = "/apps/log/confluent/ksql/";
-  //  public static String yamlDir = "E:\\opt\\confluent\\xml_table_yaml_format\\xml_custom_process\\";
-  // public static String logDir = "E:\\apps\\log\\ksql\\";
+    public static String yamlDir = "E:\\opt\\confluent\\xml_table_yaml_format\\xml_custom_process\\";
+   public static String logDir = "E:\\apps\\log\\ksql\\";
 
     public static String IntentseQ() {
         String lUUID = String.format("%040d", new BigInteger(UUID.randomUUID().toString().replace("-", ""), 16));
@@ -42,7 +45,7 @@ public class FORMAT_XML_SACOM_PROD {
         }
     }
     @Udf(description = "add tag for xml format new")
-    public      String format_xml(
+    public  static      String format_xml(
             @UdfParameter(value = "inputXML") String inputXML,
             @UdfParameter(value = "table_name") String tableName,
             @UdfParameter(value = "file_yaml") String fileName
@@ -51,13 +54,13 @@ public class FORMAT_XML_SACOM_PROD {
             inputXML = inputXML.replaceFirst("\n<operation", "<operation");
             inputXML=inputXML.replaceAll("</operation>\n", "</operation>");
 
-            String inputXMLStandard =StringEscapeUtils.escapeJava(inputXML.replaceAll("(?<=</operation>)\\s+|\\s+(?=<operation>)", ""));
+            String inputXMLStandard =StringEscapeUtils.escapeJava(inputXML);
              //String inputXMLStandard =inputXML.replaceAll("[\u0000-\u001F]", "");
            // String inputXMLStandard =inputXML.replaceAll("<!\\[CDATA\\[(.*?)\\]\\]>", "$1");;
             DocumentBuilderFactory db_factory = DocumentBuilderFactory.newInstance();
             db_factory.setCoalescing(true);
             DocumentBuilder builder = db_factory.newDocumentBuilder();
-            /*convert string to xml object*/    
+            /*convert string to xml object*/
             Document document = builder.parse(new InputSource(new StringReader(inputXMLStandard)));
             /* get node operation , set name = rowNode to prepare rename to Row .
              * get item= 0 because only one tag <operation>*/
@@ -101,6 +104,8 @@ public class FORMAT_XML_SACOM_PROD {
                 Element colElement = (Element) colNode.item(i);
                 /*get child node <before> and <after> */
                 Node childNodesBefore = colElement.getElementsByTagName("before").item(0);
+
+
                 Node childNodesAfter = colElement.getElementsByTagName("after").item(0);
                 //String getCDATA = childNodesAfter.getAttributes().item()
                 /*only process when childNodesBefore <> null */
@@ -117,7 +122,6 @@ public class FORMAT_XML_SACOM_PROD {
                     }
                 }
 
-
                 /*remove attribute index*/
                 colElement.removeAttribute("index");
                 String colName = colElement.getAttribute("name");
@@ -126,16 +130,16 @@ public class FORMAT_XML_SACOM_PROD {
                     for (Map<String, Object> templateColumn : listTemplateColumns) {
                         String columnName =  templateColumn.get("name").toString();
                         if (columnName.equals(colName)) {
+
                             String primaryKey = templateColumn.get("primary_key").toString();
                             String datatype =  templateColumn.get("data_type").toString();
                             Element primary_key = document.createElement("primary_key");
                             primary_key.appendChild(document.createTextNode(primaryKey));
                             colElement.appendChild(primary_key);
                             Element data_type = document.createElement("data_type");
-                            data_type.appendChild(document.createTextNode(datatype));
-                            //colElement.appendChild(document.createTextNode("\n"));
+                            data_type.appendChild(document.createTextNode(datatype));colElement.appendChild(document.createTextNode("\n"));
                             colElement.appendChild(data_type);
-                            //colElement.appendChild(document.createTextNode("\n"));
+                            colElement.appendChild(document.createTextNode("\n"));
                         }
                     }
                 }
@@ -148,8 +152,8 @@ public class FORMAT_XML_SACOM_PROD {
             String formatXML = writer.getBuffer().toString();
             String formatXMLResult = StringEscapeUtils.unescapeJava(formatXML);
 
-          //  System.out.println("output :  " + formatXML);
-          //  System.out.println("fomrat_XML1" + formatXML1);
+            System.out.println("output :  " + formatXML);
+           System.out.println("fomrat_XML1" + formatXMLResult);
             return formatXMLResult;
             //return formatXML;
         } catch (Exception e) {
@@ -171,12 +175,12 @@ public class FORMAT_XML_SACOM_PROD {
         }
     }
 
-//    public static void main(String[] args) throws Exception {
-//
-//        String xml ="<?xml version='1.0' encoding='UTF-8'?>\n<operation table='SACOM_SW_OWN.ATM_LOG' type='I' ts='2024-03-15 13:58:41.000000' current_ts='2024-03-15T13:58:45.241000' pos='00000000230003055451' numCols='8'>\n <col name='SHCLOG_ID' index='0'>\n   <before missing='true'/>\n   <after><![CDATA[AAEAA2YoZfPxoQAA    ]]></after>\n </col>\n <col name='INSTITUTION_ID' index='1'>\n   <before missing='true'/>\n   <after><![CDATA[2]]></after>\n </col>\n <col name='GROUP_NAME' index='2'>\n   <before missing='true'/>\n   <after><![CDATA[CAM10521]]></after>\n </col>\n <col name='UNIT' index='3'>\n   <before missing='true'/>\n   <after><![CDATA[1]]></after>\n </col>\n <col name='FUNCTION_CODE' index='4'>\n   <before missing='true'/>\n   <after><![CDATA[200]]></after>\n </col>\n <col name='LOGGED_TIME' index='5'>\n   <before missing='true'/>\n   <after><![CDATA[2024-03-15 13:58:41]]></after>\n </col>\n <col name='LOG_DATA' index='6'>\n   <before missing='true'/>\n   <after><![CDATA[22\u001c001001340\u001c\u001c9\u001dCAM\u001d9F2701009F2608F8AC1C38BE8450D39F10070600120320BC00950580808000009B0260009F3303604020]]></after>\n </col>\n <col name='SITE_ID' index='7'>\n   <before missing='true'/>\n   <after><![CDATA[1]]></after>\n </col>\n</operation>\n";
-//        String tableName = "ATM_LOG";
-//        String fileName = "ISTUAT_SACOM_SW_OWN_ATM_LOG";
-//        format_xml(xml,tableName,fileName);
-//
-//    }
+    public static void main(String[] args) throws Exception {
+
+        String xml ="<?xml version='1.0' encoding='UTF-8'?><operation table='SACOM_SW_OWN.ATM_LOG' type='I' ts='2024-03-15 13:58:41.000000' current_ts='2024-03-15T13:58:45.241000' pos='00000000230003055451' numCols='8'>\n <col name='SHCLOG_ID' index='0'>\n   <before missing='true'/>\n   <after><![CDATA[AAEAA2YoZfPxoQAA    ]]></after>\n </col>\n <col name='INSTITUTION_ID' index='1'>\n   <before missing='true'/>\n   <after><![CDATA[2]]></after>\n </col>\n <col name='GROUP_NAME' index='2'>\n   <before missing='true'/>\n   <after><![CDATA[CAM10521]]></after>\n </col>\n <col name='UNIT' index='3'>\n   <before missing='true'/>\n   <after><![CDATA[1]]></after>\n </col>\n <col name='FUNCTION_CODE' index='4'>\n   <before missing='true'/>\n   <after><![CDATA[200]]></after>\n </col>\n <col name='LOGGED_TIME' index='5'>\n   <before missing='true'/>\n   <after><![CDATA[2024-03-15 13:58:41]]></after>\n </col>\n <col name='LOG_DATA' index='6'>\n   <before missing='true'/>\n   <after><![CDATA[22\u001c001001340\u001c\u001c9\u001dCAM\u001d9F2701009F2608F8AC1C38BE8450D39F10070600120320BC00950580808000009B0260009F3303604020]]></after>\n </col>\n <col name='SITE_ID' index='7'>\n   <before missing='true'/>\n   <after><![CDATA[1]]></after>\n </col>\n</operation>";
+        String tableName = "ATM_LOG";
+        String fileName = "ISTUAT_SACOM_SW_OWN_ATM_LOG";
+        format_xml(xml,tableName,fileName);
+
+    }
 }
